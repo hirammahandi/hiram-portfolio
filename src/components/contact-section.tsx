@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { SendMessageButton } from "./send-message-button";
 import { Card, CardContent } from "./ui/card";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -18,13 +18,27 @@ export const ContactSection = () => {
         </div>
         <Card className="max-w-lg mx-auto w-full">
           <CardContent className="p-4">
-            <form className="space-y-4">
+            <form
+              className="space-y-4"
+              action={async (formData: FormData) => {
+                "use server";
+
+                const res = await fetch("http://localhost:3000/api/send", {
+                  method: "POST",
+                  body: JSON.stringify(Object.fromEntries(formData)),
+                }).then((res) => res.json());
+
+                console.log(res);
+              }}
+            >
               <div>
                 <label htmlFor="name" className="block text-sm font-medium">
                   Name
                 </label>
                 <Input
+                  required
                   id="name"
+                  name="name"
                   type="text"
                   placeholder="Your name"
                   className="mt-1 block w-full rounded-md border-input bg-background px-3 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
@@ -35,6 +49,8 @@ export const ContactSection = () => {
                   Email
                 </label>
                 <Input
+                  required
+                  name="email"
                   id="email"
                   type="email"
                   placeholder="Your email"
@@ -46,6 +62,8 @@ export const ContactSection = () => {
                   Message
                 </label>
                 <Textarea
+                  required
+                  name="message"
                   id="message"
                   rows={4}
                   placeholder="Your message"
@@ -53,12 +71,7 @@ export const ContactSection = () => {
                 />
               </div>
               <div className="flex">
-                <Button
-                  type="submit"
-                  className="inline-flex ml-auto items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                >
-                  Send Message
-                </Button>
+                <SendMessageButton />
               </div>
             </form>
           </CardContent>
