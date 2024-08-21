@@ -1,7 +1,11 @@
+import { Resend } from "resend";
 import { SendMessageButton } from "./send-message-button";
 import { Card, CardContent } from "./ui/card";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { EmailTemplate } from "./email-template";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const ContactSection = () => {
   return (
@@ -22,14 +26,22 @@ export const ContactSection = () => {
               className="space-y-4"
               action={async (formData: FormData) => {
                 "use server";
+                const body = Object.fromEntries(formData.entries()) as Record<
+                  "name" | "email" | "message",
+                  string
+                >;
 
-                const url = `${process.env.BASE_URL}/api/send`;
-                const res = await fetch(url, {
-                  method: "POST",
-                  body: JSON.stringify(Object.fromEntries(formData)),
-                }).then((res) => res.json());
+                const { data, error } = await resend.emails.send({
+                  from: `${body.name} <onboarding@resend.dev>`,
+                  to: ["hiramhernandezpena@gmail.com"],
+                  subject: "Portfolio Contact Form",
+                  react: EmailTemplate({
+                    firstName: body.name,
+                    message: body.message,
+                  }),
+                });
 
-                console.log(res);
+                console.log({ data, error });
               }}
             >
               <div>
