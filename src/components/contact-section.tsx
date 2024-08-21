@@ -23,7 +23,8 @@ export const ContactSection = () => {
               action={async (formData: FormData) => {
                 "use server";
 
-                const res = await fetch("http://localhost:3000/api/send", {
+                const url = `${process.env.BASE_URL}/api/send`;
+                const res = await fetch(url, {
                   method: "POST",
                   body: JSON.stringify(Object.fromEntries(formData)),
                 }).then((res) => res.json());
