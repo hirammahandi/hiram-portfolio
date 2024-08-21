@@ -24,6 +24,6 @@ I am a passionate Full Stack Developer with over 3 years of professional experie
 
 ## Contact
 
-Feel free to reach out to me via the contact form on the portfolio website or connect with me on [LinkedIn](www.linkedin.com/in/hiram-hernandez-peña-3a9881217).
+Feel free to reach out to me via the contact form on the portfolio website or connect with me on [LinkedIn](https://www.linkedin.com/in/hiram-hernandez-pe%C3%B1a-3a9881217/).
 
 Thank you for checking out my portfolio!
